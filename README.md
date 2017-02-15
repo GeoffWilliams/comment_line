@@ -11,17 +11,29 @@
 
 ## Description
 
-Comment out a line a file using Puppet (via `awk`).
+Comment/uncomment a line a file using Puppet (via `awk`).
 
 ## Usage
 
+### Commenting
 ```puppet
-comment_line { "/foo/bar baz":
-  path  => "/foo/bar",
-  match => "bar",
+comment_line { "/foo/bar bar":
+  ensure => commented
+  path   => "/foo/bar",
+  match  => "bar",
 }
 ```
-Comment out all lines matching `/bar/` in the file `/foo/bar`
+Comment all lines matching `/bar/` in the file `/foo/bar`
+
+### Uncommenting
+```puppet
+comment_line { "/foo/bar bam":
+  ensure => uncommented
+  path   => "/foo/bar",
+  match  => "bam",
+}
+```
+Uncomment all lines matching `/bam/` in the file `/foo/bar`
 
 ## Reference
 

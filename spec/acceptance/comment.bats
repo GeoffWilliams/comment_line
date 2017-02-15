@@ -8,13 +8,13 @@
 }
 
 @test "bas commented" {
-  grep '#I programmed in basic' /foo/bar
+  grep '^#I programmed in basic' /foo/bar
 }
 
 @test "line left alone 1" {
-  grep 'I had a drink' /foo/bar
+  grep '^I had a drink' /foo/bar
 }
 
 @test "line left alone 1" {
-  grep 'I went home' /foo/bar
+  grep '^I went home' /foo/bar
 }
