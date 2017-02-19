@@ -14,14 +14,19 @@ define comment_line(
     String                            $comment_char = "#",
 ) {
 
+  # solaris has to use nawk (new awk)
+  $awk = $facts['os']['family'] ? {
+    "Solaris" => "nawk",
+    default   => "awk",
+  }
   $temp_file    = "${path}.tmp"
   $replace_file = "> ${temp_file} && mv ${temp_file} ${path}"
 
   if $ensure == "commented" {
-    $test_file    = "bash -c \"[[ $(awk '/^[^#]+${match}/ {print}' ${path} | wc -l) -gt 0 ]]\""
+    $test_file    = "sh -c \"[[ $(${awk} '/^[^#]+${match}/ {print}' ${path} | wc -l) -gt 0 ]]\""
 
     $change_file  =
-    "awk '{
+    "${awk} '{
       if (match(\$0, /^[^${comment_char}].*${match}/)) {
         print \"${comment_char}\" \$0
       } else {
@@ -29,10 +34,10 @@ define comment_line(
       }
     }' ${path} ${replace_file}"
   } else {
-    $test_file    = "bash -c \"[[ $(awk '/^\\s*#.*${match}/ {print}' ${path} | wc -l) -gt 0 ]]\""
+    $test_file    = "sh -c \"[[ $(${awk} '/^\\s*#.*${match}/ {print}' ${path} | wc -l) -gt 0 ]]\""
 
     $change_file  =
-    "awk '{
+    "${awk} '{
       if (match(\$0, /^\s*#.*${match}/)) {
         gsub(/^\s*#\s*/,\"\", \$0)
         print \$0
