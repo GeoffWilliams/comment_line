@@ -23,7 +23,7 @@ define comment_line(
   $replace_file = "> ${temp_file} && mv ${temp_file} ${path}"
 
   if $ensure == "commented" {
-    $test_file    = "sh -c \"[ $(${awk} '/^[^#]+${match}/ {print}' ${path} | wc -l) -gt 0 ]\""
+    $test_file    = "sh -c \"[ `${awk} '/^[^#]+${match}/ {print}' ${path} | wc -l` -gt 0 ]\""
 
     $change_file  =
     "${awk} '{
@@ -34,7 +34,7 @@ define comment_line(
       }
     }' ${path} ${replace_file}"
   } else {
-    $test_file    = "sh -c \"[ $(${awk} '/^\\s*#.*${match}/ {print}' ${path} | wc -l) -gt 0 ]\""
+    $test_file    = "sh -c \"[ `${awk} '/^\\s*#.*${match}/ {print}' ${path} | wc -l` -gt 0 ]\""
 
     $change_file  =
     "${awk} '{
