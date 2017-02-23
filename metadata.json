@@ -1,6 +1,6 @@
 {
   "name": "geoffwilliams/comment_line",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "geoffwilliams",
   "summary": "Comment out a line a file using Puppet",
   "license": "Apache-2.0",
